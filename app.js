@@ -6,7 +6,9 @@ const mongoose = require('mongoose');
 const url = 'mongodb://localhost/Blogging';
 mongoose.connect(url, {useNewUrlParser:true})
 const con = mongoose.connection
+const bodyParser = require('body-parser');
 
+app.use(bodyParser.urlencoded({extended:true}));
 con.on('open', () => {
     console.log("connected...")
 })
@@ -15,7 +17,6 @@ app.use(express.json());
 
 app.use('/',routes)
 
-
-app.listen(5020, ()=>{
+app.listen(port, ()=>{
     console.log(`Server started on port ${port}`)
 })
