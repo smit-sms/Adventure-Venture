@@ -3,7 +3,7 @@ const app = express();
 const port = process.env.PORT || 5020;
 const routes = require('./routes/route');
 const mongoose = require('mongoose');
-const url = 'mongodb://localhost/AdventureVenture';
+const url = 'mongodb://localhost:27017/Adventure-Venture';
 mongoose.connect(url, {useNewUrlParser:true})
 const con = mongoose.connection
 const bodyParser = require('body-parser');
