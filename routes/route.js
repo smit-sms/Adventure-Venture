@@ -9,8 +9,9 @@ router.get("/campgrounds", CampgroundsController.campgroundspage);
 // add a new campground
 router.get("/campgrounds/new", CampgroundsController.addnewcampground);
 router.post("/campgrounds", CampgroundsController.addnew);
-
 // view a campground
 router.get("/campgrounds/:id", CampgroundsController.showcampground)
+
+
 
 module.exports = router
