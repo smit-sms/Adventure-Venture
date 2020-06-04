@@ -1,9 +1,11 @@
 <!-- Include Header  -->
 <%- include ('includes/header.ejs') %>
 
-<h1>This is the show template</h1>
+<h1><%= campground.name %></h1>
 
-<p><%= campground.name%></p>
+<img src="<%= campground.image %>">
+
+<p><%= campground.description %></p>
 
 <!-- Include Footer  -->
 <%- include ('includes/footer.ejs') %>
