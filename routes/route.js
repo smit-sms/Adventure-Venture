@@ -1,5 +1,5 @@
 const express = require('express')
-const router = express.Router()
+const router  = express.Router()
 const CampgroundsController = require("../controllers/CampgroundsController");
 
 // landing/home page
@@ -10,7 +10,7 @@ router.get("/campgrounds", CampgroundsController.campgroundspage);
 router.get("/campgrounds/new", CampgroundsController.addnewcampground);
 router.post("/campgrounds", CampgroundsController.addnew);
 
-//
-
+// view a campground
+router.get("/campgrounds/:id", CampgroundsController.showcampground)
 
 module.exports = router
