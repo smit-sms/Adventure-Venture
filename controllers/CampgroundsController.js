@@ -32,9 +32,10 @@ module.exports.addnew = async (req,res)=>{
 }
 
 // show a campground info
-module.exports.showcampground = async (req,res)=>{
-    const foundcampground = await (await Campground.findById(req.params.id)).execPopulate("Comment");
+module.exports.showcampground = async (req,res)=> {
+    var foundcampground = await (await Campground.findById(req.params.id)).execPopulate("comments");
     if(foundcampground){
+        console.log(foundcampground);
         res.render("showcamground",{campground:foundcampground});  
     }else{
         console.log("Error in Finding the specified campground!");
