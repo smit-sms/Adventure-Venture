@@ -4,11 +4,14 @@ const port     = process.env.PORT || 5020;
 const routes   = require('./routes/route');
 const mongoose = require('mongoose');
 const url      = 'mongodb://localhost:27017/Adventure-Venture';
+const seedDB   = require('./seeds');
+
 mongoose.connect(url, {useNewUrlParser:true})
 const con      = mongoose.connection
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended:true}));
 
+seedDB();
 con.on('open', () => {
     console.log("connected...")
 })
