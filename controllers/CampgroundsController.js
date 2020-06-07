@@ -33,7 +33,7 @@ module.exports.addnew = async (req,res)=>{
 
 // show a campground info
 module.exports.showcampground = async (req,res)=>{
-    const foundcampground = await Campground.findById(req.params.id);
+    const foundcampground = await (await Campground.findById(req.params.id)).execPopulate("Comment");
     if(foundcampground){
         res.render("showcamground",{campground:foundcampground});  
     }else{
