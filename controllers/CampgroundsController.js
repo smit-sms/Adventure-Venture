@@ -8,11 +8,11 @@ module.exports.landingpage = async (req,res)=>{
 
 module.exports.campgroundspage = async (req,res)=>{
     const campgrounds = await Campground.find();
-    res.render('index',{campgrounds:campgrounds}); 
+    res.render('campgrounds/index',{campgrounds:campgrounds}); 
 }
 
 module.exports.addnewcampground = async (req,res)=>{
-    res.render("newcampground");
+    res.render("campgrounds/newcampground");
 }
 
 module.exports.addnew = async (req,res)=>{
@@ -35,7 +35,7 @@ module.exports.addnew = async (req,res)=>{
 module.exports.showcampground = async (req,res)=> {
     var foundcampground = await (await Campground.findById(req.params.id)).execPopulate("comments");
     if(foundcampground){
-        res.render("showcamground",{campground:foundcampground});  
+        res.render("campgrounds/showcamground",{campground:foundcampground});  
     }else{
         console.log("Error in Finding the specified campground!");
     } 

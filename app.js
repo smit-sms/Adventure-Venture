@@ -1,7 +1,7 @@
 const express  = require('express');
 const app      = express();
 const port     = process.env.PORT || 5020;
-const routes   = require('./routes/route');
+const routes   = require('./routes/index');
 const mongoose = require('mongoose');
 const url      = 'mongodb://localhost:27017/Adventure-Venture';
 const seedDB   = require('./seeds');
@@ -17,6 +17,8 @@ con.on('open', () => {
 })
 app.set("view engine", "ejs");
 app.use(express.json());
+app.use(express.static(__dirname + "/public"))
+
 
 app.use('/',routes)
 

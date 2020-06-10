@@ -1,0 +1,50 @@
+<!-- Include Header  -->
+<%- include ('../includes/header.ejs') %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <p class="lead">Adventure-Venture</p>
+            <div class="list-group">
+                <li class="list-group-item active">Info 1</li>
+                <li class="list-group-item">Info 2</li>
+                <li class="list-group-item">Info 3</li>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div style="width: 100%; margin: 10px auto;">
+                <div class="card">
+                    <div class="card-header bg-transparent" id="showimg">
+                        <img src="<%= campground.image%>">
+                    </div>
+                    <div class="card-body">
+                        <h4 class="float-right">₹ 2000/night</h4>
+                        <h4><a href="#"><%= campground.name%></a></h4>
+                        <p><%= campground.description %></p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="text-right">
+                            <a class="btn btn-success" href="/campgrounds/<%= campground._id %>/comments/new">
+                                Add a new comment
+                            </a>
+                        </div><hr>
+                        <% campground.comments.forEach(function(comment){%>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <strong><%= comment.author %></strong>
+                                    <span class="float-right">10 days ago</span>
+                                    <p>
+                                        <%= comment.text %> 
+                                    </p>
+                                </div>
+                            </div>
+                        <% }) %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><br>
+
+<!-- Include Footer  -->
+<%- include ('../includes/footer.ejs') %>
