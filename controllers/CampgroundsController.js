@@ -17,7 +17,7 @@ module.exports.addnewcampground = async (req,res)=>{
 
 module.exports.addnew = async (req,res)=>{
     // add new campground
-    const campground =  new Campground({
+    const campground =  new Campground({ 
         name: req.body.name,
         image: req.body.image,
         description: req.body.desc 
