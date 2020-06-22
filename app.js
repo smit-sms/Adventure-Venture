@@ -1,10 +1,14 @@
-const express  = require('express');
-const app      = express();
-const port     = process.env.PORT || 5020;
-const routes   = require('./routes/index');
-const mongoose = require('mongoose');
-const url      = 'mongodb://localhost:27017/Adventure-Venture';
-const seedDB   = require('./seeds');
+const express       = require('express');
+const app           = express();
+const port          = process.env.PORT || 5020;
+const routes        = require('./routes/index');
+const mongoose      = require('mongoose');
+const passport      = require('passport');
+const LocalStrategy = require('passport-local');
+const url           = 'mongodb://localhost:27017/Adventure-Venture';
+const seedDB        = require('./seeds');
+
+
 
 mongoose.connect(url, {useNewUrlParser:true});
 const con      = mongoose.connection;
