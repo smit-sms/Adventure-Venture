@@ -1,12 +1,15 @@
 const express       = require('express');
 const app           = express();
 const port          = process.env.PORT || 5020;
-const routes        = require('./routes/index');
 const mongoose      = require('mongoose');
 const passport      = require('passport');
 const LocalStrategy = require('passport-local');
 const url           = 'mongodb://localhost:27017/Adventure-Venture';
 const seedDB        = require('./seeds');
+
+const commentRoutes    = require('./routes/comments');
+const campgroundRoutes = require('./routes/campgrounds');
+const indexRoutes       = require('./routes/index');
 
 const User = require("./models/UserModel");
 
@@ -15,7 +18,8 @@ const con      = mongoose.connection;
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended:true}));
 
-seedDB();
+// seeding the DB
+// seedDB();
 
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({
@@ -41,58 +45,10 @@ app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.static(__dirname + "/public"));
 
-app.use('/',routes);
-
-// <------------------ AUTH ROUTES --------------------->
-
-app.get("/register", (req,res)=>{
-    res.render("register");
-})
-
-// handle signup logic
-app.post("/register", (req,res)=>{
-    var newUser = new User({username: req.body.username});
-    User.register(newUser, req.body.password,(err, User)=>{
-        if(err){
-            console.log(err);
-            return res.render("register");
-        }
-        passport.authenticate("local")(req,res, ()=>{
-            res.redirect("/campgrounds");
-        });
-    } )
-})
- 
-// show login form
-app.get("/login", (req,res)=>{
-    res.render("login"); 
-})
-
-// login logic post
-// app.post("/login",middleware, callback)
-app.post("/login", passport.authenticate("local",
-    {
-        successRedirect: "/campgrounds", 
-        failureRedirect: "/login"
-    }),(req,res)=>{
-
-});
-
-// logout route
-app.get("/logout", (req,res)=>{
-    req.logout();
-    res.redirect("/campgrounds");
-})
-
-// <------------------ END AUTH ROUTES --------------------->
-
-function isLoggedIn(req,res,next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/login");
-}
-
+// routes
+app.use("/",indexRoutes);
+app.use("/campgrounds", campgroundRoutes);
+app.use("/campgrounds/:id/comments", commentRoutes);
 
 
 app.listen(port, ()=>{

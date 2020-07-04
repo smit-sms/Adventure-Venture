@@ -6,8 +6,11 @@ var commentSchema = new mongoose.Schema({
         required: true
     },
     author: {
-        type: String,
-        required: true
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        },
+        username: String
     }
 });
 

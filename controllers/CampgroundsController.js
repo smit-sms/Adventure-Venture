@@ -1,11 +1,6 @@
 // schema access (models)
 const Campground = require('../models/CampgroundModel');
 
-
-module.exports.landingpage = async (req,res)=>{
-    res.render("landing");
-}
-
 module.exports.campgroundspage = async (req,res)=>{
     const campgrounds = await Campground.find();
     res.render('campgrounds/index',{campgrounds:campgrounds, currentUser: req.user}); 
