@@ -3,7 +3,7 @@ const Campground = require('../models/CampgroundModel');
 
 module.exports.campgroundspage = async (req,res)=>{
     const campgrounds = await Campground.find();
-    res.render('campgrounds/index',{campgrounds:campgrounds, currentUser: req.user}); 
+    res.render('campgrounds/index',{campgrounds:campgrounds}); 
 }
 
 module.exports.addnewcampground = async (req,res)=>{
@@ -12,10 +12,15 @@ module.exports.addnewcampground = async (req,res)=>{
 
 module.exports.addnew = async (req,res)=>{
     // add new campground
+    var author = {
+        id: req.user._id,
+        username: req.user.username
+    }
     const campground =  new Campground({ 
         name: req.body.name,
         image: req.body.image,
-        description: req.body.desc 
+        description: req.body.desc,
+        author:author 
     })
     const saved = await campground.save();
     if(saved){
