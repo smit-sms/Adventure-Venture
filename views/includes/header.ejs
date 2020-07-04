@@ -27,7 +27,7 @@
                         <li><a class="nav-link" href="/login">Login</a></li>
                         <li><a class="nav-link" href="/register">Register</a></li>
                     <% } else{ %>
-                        <li><a class="nav-link">Signed in as: <%= currentUser.username %></a></li>
+                        <li><a class="nav-link">Signed in as <%= currentUser.username %></a></li>
                         <li><a class="nav-link" href="/logout">Logout</a></li>
                     <% } %>
                 </ul>
