@@ -1,7 +1,8 @@
-const express = require('express')
-const router  = express.Router()
+const express = require('express');
+const router  = express.Router();
 const CampgroundsController = require("../controllers/CampgroundsController");
 const CommentsController    = require("../controllers/CommentsController");
+
 
 // <----------------------- CAMPGROUND ROUTES ----------------------------->
 
@@ -19,9 +20,15 @@ router.get("/campgrounds/:id", CampgroundsController.showcampground);
 // <----------------------- COMMENTS ROUTES ----------------------------->
 
 // add a new comment
-router.get("/campgrounds/:id/comments/new", CommentsController.newcomment);
-router.post("/campgrounds/:id/comments", CommentsController.addcomment);
+router.get("/campgrounds/:id/comments/new", isLoggedIn, CommentsController.newcomment);
+router.post("/campgrounds/:id/comments", isLoggedIn, CommentsController.addcomment);
 
+function isLoggedIn(req,res,next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect("/login");
+} 
 
 
 module.exports = router;

@@ -8,7 +8,7 @@ module.exports.landingpage = async (req,res)=>{
 
 module.exports.campgroundspage = async (req,res)=>{
     const campgrounds = await Campground.find();
-    res.render('campgrounds/index',{campgrounds:campgrounds}); 
+    res.render('campgrounds/index',{campgrounds:campgrounds, currentUser: req.user}); 
 }
 
 module.exports.addnewcampground = async (req,res)=>{

@@ -23,9 +23,13 @@
                     </li>        
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a class="nav-link" href="#">Login</a></li>
-                    <li><a class="nav-link" href="#">Register</a></li>
-                    <li><a class="nav-link" href="#">Logout</a></li>
+                    <% if(!currentUser){ %>
+                        <li><a class="nav-link" href="/login">Login</a></li>
+                        <li><a class="nav-link" href="/register">Register</a></li>
+                    <% } else{ %>
+                        <li><a class="nav-link">Signed in as: <%= currentUser.username %></a></li>
+                        <li><a class="nav-link" href="/logout">Logout</a></li>
+                    <% } %>
                 </ul>
             </div>
           </nav>

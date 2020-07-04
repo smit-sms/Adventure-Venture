@@ -8,7 +8,7 @@ const LocalStrategy = require('passport-local');
 const url           = 'mongodb://localhost:27017/Adventure-Venture';
 const seedDB        = require('./seeds');
 
-
+const User = require("./models/UserModel");
 
 mongoose.connect(url, {useNewUrlParser:true});
 const con      = mongoose.connection;
@@ -16,6 +16,24 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended:true}));
 
 seedDB();
+
+// PASSPORT CONFIGURATION
+app.use(require("express-session")({
+    secret: "Once again cute dog!",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+app.use((req,res,next)=>{
+    res.locals.currentUser = req.user;
+    next();  
+})
+
 con.on('open', () => {
     console.log("connected...");
 })
@@ -23,8 +41,59 @@ app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.static(__dirname + "/public"));
 
-
 app.use('/',routes);
+
+// <------------------ AUTH ROUTES --------------------->
+
+app.get("/register", (req,res)=>{
+    res.render("register");
+})
+
+// handle signup logic
+app.post("/register", (req,res)=>{
+    var newUser = new User({username: req.body.username});
+    User.register(newUser, req.body.password,(err, User)=>{
+        if(err){
+            console.log(err);
+            return res.render("register");
+        }
+        passport.authenticate("local")(req,res, ()=>{
+            res.redirect("/campgrounds");
+        });
+    } )
+})
+ 
+// show login form
+app.get("/login", (req,res)=>{
+    res.render("login"); 
+})
+
+// login logic post
+// app.post("/login",middleware, callback)
+app.post("/login", passport.authenticate("local",
+    {
+        successRedirect: "/campgrounds", 
+        failureRedirect: "/login"
+    }),(req,res)=>{
+
+});
+
+// logout route
+app.get("/logout", (req,res)=>{
+    req.logout();
+    res.redirect("/campgrounds");
+})
+
+// <------------------ END AUTH ROUTES --------------------->
+
+function isLoggedIn(req,res,next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect("/login");
+}
+
+
 
 app.listen(port, ()=>{
     console.log(`Server started on port ${port}`);
