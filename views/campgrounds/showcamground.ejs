@@ -23,6 +23,7 @@
                         <p><%= campground.description %></p>
                         <p>
                             <b>Submitted by <i><%= campground.author.username %></i></b>
+                            <a href="/campgrounds/<%= campground._id %>/edit" class="btn btn-warning float-right">Edit</a>
                         </p>
                     </div>
                     <div class="card-footer">

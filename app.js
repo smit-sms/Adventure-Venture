@@ -6,6 +6,7 @@ const passport      = require('passport');
 const LocalStrategy = require('passport-local');
 const url           = 'mongodb://localhost:27017/Adventure-Venture';
 const seedDB        = require('./seeds');
+const methodOverride = require('method-override');
 
 const commentRoutes    = require('./routes/comments');
 const campgroundRoutes = require('./routes/campgrounds');
@@ -18,8 +19,7 @@ const con      = mongoose.connection;
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended:true}));
 
-// seeding the DB
-// seedDB();
+// seedDB();        // seeding the DB
 
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({
@@ -40,10 +40,13 @@ app.use((req,res,next)=>{
 
 con.on('open', () => {
     console.log("connected...");
+    console.log("<--------------------------------------------->");
 })
 app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.static(__dirname + "/public"));
+app.use(methodOverride("_method"));
+
 
 // routes
 app.use("/",indexRoutes);

@@ -13,6 +13,13 @@ router.post("/", isLoggedIn, CampgroundsController.addnew);
 // view a campground
 router.get("/:id", CampgroundsController.showcampground);
 
+// edit view campground
+router.get("/:id/edit", CampgroundsController.editcampground);
+
+// update campground
+router.put("/:id", CampgroundsController.updatecampground);
+
+
 // middleware
 function isLoggedIn(req,res,next){
     if(req.isAuthenticated()){

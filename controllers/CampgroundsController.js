@@ -20,7 +20,7 @@ module.exports.addnew = async (req,res)=>{
         name: req.body.name,
         image: req.body.image,
         description: req.body.desc,
-        author:author 
+        author: author 
     })
     const saved = await campground.save();
     if(saved){
@@ -39,4 +39,36 @@ module.exports.showcampground = async (req,res)=> {
     }else{
         console.log("Error in Finding the specified campground!");
     } 
+}
+
+// Edit a campground
+module.exports.editcampground = async (req,res)=>{
+    var foundcampground = await Campground.findById(req.params.id);
+    if(foundcampground){
+        res.render("campgrounds/edit",{campground: foundcampground});
+    }
+    else{
+        console.log("Error in getting the specified campground!");
+    }
+}
+
+// update the campground & redirect
+module.exports.updatecampground = async (req,res)=>{
+    try{
+        var foundcampground = await Campground.findById(req.params.id);
+        foundcampground.name        = req.body.campground.name;
+        foundcampground.image       = req.body.campground.image;
+        foundcampground.description = req.body.campground.description;
+        try{
+            const updated = await foundcampground.save();
+            res.redirect("/campgrounds/" + req.params.id);
+        }
+        catch(error){
+            console.log(error);
+            res.redirect("/campgrounds");
+        }
+    }
+    catch(error){
+        console.log(error);
+    }
 }
