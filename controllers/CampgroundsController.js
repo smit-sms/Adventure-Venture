@@ -43,13 +43,14 @@ module.exports.showcampground = async (req,res)=> {
 
 // Edit a campground
 module.exports.editcampground = async (req,res)=>{
-    var foundcampground = await Campground.findById(req.params.id);
-    if(foundcampground){
-        res.render("campgrounds/edit",{campground: foundcampground});
-    }
-    else{
-        console.log("Error in getting the specified campground!");
-    }
+    Campground.findById(req.params.id, (err, foundcampground)=>{
+        if(err){
+            console.log(err);
+        }
+        else{
+            res.render("campgrounds/edit",{campground: foundcampground});
+        }
+    });
 }
 
 // update the campground & redirect
@@ -66,9 +67,27 @@ module.exports.updatecampground = async (req,res)=>{
         catch(error){
             console.log(error);
             res.redirect("/campgrounds");
-        }
+        } 
     }
     catch(error){
         console.log(error);
     }
 }
+
+// delete a particular campground
+module.exports.deletecampground = async (req,res) =>{
+    try {
+        Campground.findByIdAndRemove(req.params.id, (err)=>{
+            if(err){
+                console.log(err);
+                res.redirect("/campgrounds");
+            }
+            else{
+                res.redirect("/campgrounds");
+            }
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
+  

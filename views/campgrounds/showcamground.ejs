@@ -22,9 +22,14 @@
                         <h4><a href="#"><%= campground.name%></a></h4>
                         <p><%= campground.description %></p>
                         <p>
-                            <b>Submitted by <i><%= campground.author.username %></i></b>
-                            <a href="/campgrounds/<%= campground._id %>/edit" class="btn btn-warning float-right">Edit</a>
+                            <b>Submitted by <i><%= campground.author.username %></i></b><br>
                         </p>
+                        <% if(currentUser && campground.author.id.equals(currentUser._id)){ %>
+                            <a href="/campgrounds/<%= campground._id %>/edit" class="btn btn-warning btn-sm">Edit</a>
+                            <form action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST" id="delete-form">
+                                <button class="btn btn-sm btn-danger">Delete</button> 
+                            </form>
+                        <% } %>
                     </div>
                     <div class="card-footer">
                         <div class="text-right">
