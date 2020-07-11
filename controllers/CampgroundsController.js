@@ -18,6 +18,7 @@ module.exports.addnew = async (req,res)=>{
     }
     const campground =  new Campground({ 
         name: req.body.name,
+        price: req.body.price,
         image: req.body.image,
         description: req.body.desc,
         author: author 
@@ -62,6 +63,7 @@ module.exports.updatecampground = async (req,res)=>{
     try{
         var foundcampground = await Campground.findById(req.params.id);
         foundcampground.name        = req.body.campground.name;
+        foundcampground.price       = req.body.campground.price;
         foundcampground.image       = req.body.campground.image;
         foundcampground.description = req.body.campground.description;
         try{
