@@ -16,17 +16,18 @@ router.get("/register", (req,res)=>{
 // handle signup logic
 router.post("/register", (req,res)=>{
     var newUser = new User({username: req.body.username});
-    User.register(newUser, req.body.password,(err, User)=>{
-        if(err){
-            console.log(err);
-            return res.render("register");
+    User.register(newUser, req.body.password,(err, user)=>{
+        if(err){            
+            req.flash("error", err.message);
+            return res.redirect("/register");
         }
         passport.authenticate("local")(req,res, ()=>{
+            req.flash("success", "Welcome to Adventure-Venture " + user.username + "!");
             res.redirect("/campgrounds");
         });
     } )
 })
- 
+
 // show login form
 router.get("/login", (req,res)=>{
     res.render("login"); 
@@ -39,24 +40,17 @@ router.post("/login", passport.authenticate("local",
         successRedirect: "/campgrounds", 
         failureRedirect: "/login"
     }),(req,res)=>{
-
+ 
 });
 
 // logout route
 router.get("/logout", (req,res)=>{
     req.logout();
+    req.flash("success", "Logged out successfully!");
     res.redirect("/campgrounds");
 })
 
 // <------------------ END AUTH ROUTES --------------------->
-
-// middleware
-function isLoggedIn(req,res,next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/login");
-} 
 
 
 module.exports = router;

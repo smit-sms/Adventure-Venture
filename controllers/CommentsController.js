@@ -28,20 +28,25 @@ module.exports.addcomment = async (req,res) => {
                     comment.save(); 
                     campground.comments.push(comment);
                     campground.save();
+                    req.flash("success", "Successfully added a comment!");
                     res.redirect('/campgrounds/' + campground._id); 
                 }
                 else{
-                    console.log("Error in Finding the specified campground!");
+                    req.flash("error", "Some error occurred. Please try again!");
+                    res.redirect("back");
                 }
             }
             catch(error){
-                console.log(error);
+                req.flash("error", "Some error occurred. Please try again!");
+                res.redirect("back");
             }        
         }else{
-            console.log("Error in Finding the specified campground!");
+            req.flash("error", "Some error occurred. Please try again!");
+            res.redirect("back");
         }    
     } catch (error) {
-        console.log(error);
+        req.flash("error", "Some error occurred. Please try again!");
+        res.redirect("back");
     } 
 }
 
@@ -50,6 +55,7 @@ module.exports.editcomment = async (req,res)=>{
     Comment.findById(req.params.comments_id, (err, foundComment)=>{
         if(err){
             console.log(err);
+            req.flash("error", "Some error occurred. Please try again!");
             res.redirect("back");
         }
         else{
@@ -62,10 +68,11 @@ module.exports.editcomment = async (req,res)=>{
 module.exports.updatecomment = async (req,res)=>{
     Comment.findByIdAndUpdate(req.params.comments_id, req.body.comment, (err,updatedComment)=>{
         if(err){
-            console.log(err);
+            req.flash("error", "Some error occurred. Please try again!");
             res.redirect("back");
         }
         else{
+            req.flash("Success", "Successfully updated the comment!");
             res.redirect("/campgrounds/" + req.params.id);
         }
     });
@@ -75,15 +82,16 @@ module.exports.deletecomment = async (req,res)=>{
     try {
         Comment.findByIdAndRemove(req.params.comments_id, (err)=>{
             if(err){
-                console.log(err);
+                req.flash("error", "Some error occurred. Please try again!");
                 res.redirect("back");
             }
             else{
+                req.flash("success", "Successfully deleted the comment!");
                 res.redirect("/campgrounds/" + req.params.id);
             }
         });
     } catch (error) {
-        console.log(error);
+        req.flash("error", "Some error occurred. Please try again!");
         res.redirect("back");
     }
 }

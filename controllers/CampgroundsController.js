@@ -24,10 +24,12 @@ module.exports.addnew = async (req,res)=>{
     })
     const saved = await campground.save();
     if(saved){
+        req.flash("success", "Successfully added a new campground!");
         res.redirect('/campgrounds');
     }
     else{
-        console.log("Some Error in Adding the Campground!");
+        req.flash("error", "Some error occurred. Please try again!");
+        res.redirect("back");
     }
 }
 
@@ -37,7 +39,8 @@ module.exports.showcampground = async (req,res)=> {
     if(foundcampground){
         res.render("campgrounds/showcamground",{campground:foundcampground});  
     }else{
-        console.log("Error in Finding the specified campground!");
+        req.flash("error", "Couldn't find the campground!");
+        res.redirect("back");
     } 
 }
 
@@ -45,7 +48,8 @@ module.exports.showcampground = async (req,res)=> {
 module.exports.editcampground = async (req,res)=>{
     Campground.findById(req.params.id, (err, foundcampground)=>{
         if(err){
-            console.log(err);
+            req.flash("error", "Some error occurred. Please try again!");
+            res.redirect("back");
         }
         else{
             res.render("campgrounds/edit",{campground: foundcampground});
@@ -62,15 +66,17 @@ module.exports.updatecampground = async (req,res)=>{
         foundcampground.description = req.body.campground.description;
         try{
             const updated = await foundcampground.save();
+            req.flash("success", "Campground updated successfully!");
             res.redirect("/campgrounds/" + req.params.id);
         }
         catch(error){
-            console.log(error);
+            req.flash("error", "Some error occurred. Please try again!");
             res.redirect("/campgrounds");
         } 
     }
     catch(error){
-        console.log(error);
+        req.flash("error", "Some error occurred. Please try again!");
+        res.redirect("back");
     }
 }
 
@@ -80,14 +86,17 @@ module.exports.deletecampground = async (req,res) =>{
         Campground.findByIdAndRemove(req.params.id, (err)=>{
             if(err){
                 console.log(err);
+                req.flash("error", "Some error occurred. Please try again!");
                 res.redirect("/campgrounds");
             }
             else{
+                req.flash("success", "Successfully deleted the campground!");
                 res.redirect("/campgrounds");
             }
         });
     } catch (error) {
-        console.log(error);
+        req.flash("error", "Some error occurred. Please try again!");
+        res.redirect("back");
     }
 }
   

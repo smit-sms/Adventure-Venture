@@ -7,6 +7,7 @@ const LocalStrategy  = require('passport-local');
 const url            = 'mongodb://localhost:27017/Adventure-Venture';
 const seedDB         = require('./seeds');
 const methodOverride = require('method-override');
+const flash          = require('connect-flash');
 
 // acquire routes
 const commentRoutes    = require('./routes/comments');
@@ -20,7 +21,9 @@ const con      = mongoose.connection;
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended:true}));
 
-// seedDB();        // seeding the DB
+// seedDB();            // seeding the DB
+
+app.use(flash());       // flash messages plugin
 
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({
@@ -28,6 +31,7 @@ app.use(require("express-session")({
     resave: false,
     saveUninitialized: false
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
@@ -36,6 +40,8 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use((req,res,next)=>{
     res.locals.currentUser = req.user;
+    res.locals.error       = req.flash("error");
+    res.locals.success     = req.flash("success");
     next();  
 })
 
