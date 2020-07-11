@@ -1,16 +1,17 @@
-const express       = require('express');
-const app           = express();
-const port          = process.env.PORT || 5020;
-const mongoose      = require('mongoose');
-const passport      = require('passport');
-const LocalStrategy = require('passport-local');
-const url           = 'mongodb://localhost:27017/Adventure-Venture';
-const seedDB        = require('./seeds');
+const express        = require('express');
+const app            = express();
+const port           = process.env.PORT || 5020;
+const mongoose       = require('mongoose');
+const passport       = require('passport');
+const LocalStrategy  = require('passport-local');
+const url            = 'mongodb://localhost:27017/Adventure-Venture';
+const seedDB         = require('./seeds');
 const methodOverride = require('method-override');
 
+// acquire routes
 const commentRoutes    = require('./routes/comments');
 const campgroundRoutes = require('./routes/campgrounds');
-const indexRoutes       = require('./routes/index');
+const indexRoutes      = require('./routes/index');
 
 const User = require("./models/UserModel");
 
@@ -39,20 +40,17 @@ app.use((req,res,next)=>{
 })
 
 con.on('open', () => {
-    console.log("connected...");
-    console.log("<--------------------------------------------->");
+    console.log("Connected to db...");
 })
 app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 
-
-// routes
+// use routes
 app.use("/",indexRoutes);
 app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
-
 
 app.listen(port, ()=>{
     console.log(`Server started on port ${port}`);
