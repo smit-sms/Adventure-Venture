@@ -6,7 +6,16 @@ const CommentsController    = require("../controllers/CommentsController");
 router.get("/new", isLoggedIn, CommentsController.newcomment);
 router.post("/", isLoggedIn, CommentsController.addcomment);
 
-// middleware
+// edit a comment
+router.get("/:comments_id/edit", CommentsController.editcomment);
+// update a comment
+router.put("/:comments_id", CommentsController.updatecomment);
+
+// delete a comment
+router.delete("/:comments_id", CommentsController.deletecomment);
+
+
+// middlewares
 function isLoggedIn(req,res,next){
     if(req.isAuthenticated()){
         return next();

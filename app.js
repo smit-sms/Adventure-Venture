@@ -14,7 +14,7 @@ const indexRoutes       = require('./routes/index');
 
 const User = require("./models/UserModel");
 
-mongoose.connect(url, {useNewUrlParser:true});
+mongoose.connect(url, {useNewUrlParser:true, useUnifiedTopology: true, useFindAndModify: false});
 const con      = mongoose.connection;
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended:true}));

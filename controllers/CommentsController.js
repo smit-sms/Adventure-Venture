@@ -44,3 +44,46 @@ module.exports.addcomment = async (req,res) => {
         console.log(error);
     } 
 }
+
+// edit comment
+module.exports.editcomment = async (req,res)=>{
+    Comment.findById(req.params.comments_id, (err, foundComment)=>{
+        if(err){
+            console.log(err);
+            res.redirect("back");
+        }
+        else{
+            res.render("comments/edit", {campground_id:req.params.id, comment:foundComment});
+        }
+    });
+}
+
+// update comment
+module.exports.updatecomment = async (req,res)=>{
+    Comment.findByIdAndUpdate(req.params.comments_id, req.body.comment, (err,updatedComment)=>{
+        if(err){
+            console.log(err);
+            res.redirect("back");
+        }
+        else{
+            res.redirect("/campgrounds/" + req.params.id);
+        }
+    });
+}
+
+module.exports.deletecomment = async (req,res)=>{
+    try {
+        Comment.findByIdAndRemove(req.params.comments_id, (err)=>{
+            if(err){
+                console.log(err);
+                res.redirect("back");
+            }
+            else{
+                res.redirect("/campgrounds/" + req.params.id);
+            }
+        });
+    } catch (error) {
+        console.log(error);
+        res.redirect("back");
+    }
+}
