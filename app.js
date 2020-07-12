@@ -13,7 +13,7 @@ const flash          = require('connect-flash');
 const commentRoutes    = require('./routes/comments');
 const campgroundRoutes = require('./routes/campgrounds');
 const indexRoutes      = require('./routes/index');
-
+// acquiring User model
 const User = require("./models/UserModel");
 
 mongoose.connect(url, {useNewUrlParser:true, useUnifiedTopology: true, useFindAndModify: false});
@@ -24,6 +24,8 @@ app.use(bodyParser.urlencoded({extended:true}));
 // seedDB();            // seeding the DB
 
 app.use(flash());       // flash messages plugin
+
+app.locals.moment = require('moment');          // moments plugin for timings..
 
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({

@@ -1,7 +1,7 @@
-const express = require('express');
-const router  = express.Router();
-const passport      = require('passport');
-const User = require("../models/UserModel");
+const express  = require('express');
+const router   = express.Router();
+const passport = require('passport');
+const User     = require("../models/UserModel");
 
 router.get("/", (req,res)=>{
     res.render("landing");
@@ -38,7 +38,9 @@ router.get("/login", (req,res)=>{
 router.post("/login", passport.authenticate("local",
     {
         successRedirect: "/campgrounds", 
-        failureRedirect: "/login"
+        failureRedirect: "/login",
+        failureFlash: true,
+        successFlash: 'Welcome back!'
     }),(req,res)=>{
          
 });
