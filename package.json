@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/smit-sms/Blogging-App.git"
+    "url": "git+https://github.com/smit-sms/Adventure-Venture.git"
   },
   "author": "smit-sms",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/smit-sms/Blogging-App/issues"
+    "url": "https://github.com/smit-sms/Adventure-Venture/issues"
   },
-  "homepage": "https://github.com/smit-sms/Blogging-App#readme",
+  "homepage": "https://github.com/smit-sms/Adventure-Venture#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
     "connect-flash": "^0.1.1",
