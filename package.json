@@ -1,7 +1,7 @@
 {
-  "name": "blogging-app",
+  "name": "adventure-venture",
   "version": "1.0.0",
-  "description": "A simple blogging website",
+  "description": "This is a camping ground website.",
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
