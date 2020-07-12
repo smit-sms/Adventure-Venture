@@ -21,15 +21,13 @@ const con      = mongoose.connection;
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended:true}));
 
-// seedDB();            // seeding the DB
-
 app.use(flash());       // flash messages plugin
 
 app.locals.moment = require('moment');          // moments plugin for timings..
 
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({
-    secret: "Once again cute dog!",
+    secret: "secret",
     resave: false,
     saveUninitialized: false
 }));
@@ -50,6 +48,9 @@ app.use((req,res,next)=>{
 con.on('open', () => {
     console.log("Connected to db...");
 })
+
+// seedDB();            // seeding the DB
+
 app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.static(__dirname + "/public"));

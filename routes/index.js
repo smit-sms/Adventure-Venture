@@ -25,7 +25,7 @@ router.post("/register", (req,res)=>{
             req.flash("success", "Welcome to Adventure-Venture " + user.username + "!");
             res.redirect("/campgrounds");
         });
-    } )
+    });
 })
 
 // show login form

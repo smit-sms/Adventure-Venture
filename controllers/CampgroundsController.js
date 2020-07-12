@@ -87,7 +87,6 @@ module.exports.deletecampground = async (req,res) =>{
     try {
         Campground.findByIdAndRemove(req.params.id, (err)=>{
             if(err){
-                console.log(err);
                 req.flash("error", "Some error occurred. Please try again!");
                 res.redirect("/campgrounds");
             }
