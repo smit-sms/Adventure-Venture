@@ -31,10 +31,10 @@ Once you have Node.js and MongoDB installed on your computer,
 ## Built With
 
 - [Node.js](https://nodejs.org) - Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.
-- [express](https://expressjs.com/) - Fast, unopinionated, minimalist web framework for Node.js
+- [Express](https://expressjs.com/) - Fast, unopinionated, minimalist web framework for Node.js
 - [MongoDB](https://www.mongodb.com/) - The database for modern applications
 - [Mongoose](https://mongoosejs.com/) - Elegant MongoDB object modeling for Node.js
-- [ejs](https://ejs.co/) - Embedded JavaScript templating
+- [EJS](https://ejs.co/) - Embedded JavaScript templating
 - [Passport](http://www.passportjs.org/) - Simple, unobtrusive authentication for Node.js
 - [Bootstrap 4](https://getbootstrap.com/) - The most popular front-end framework for developing responsive, mobile-first websites.
 
