@@ -38,7 +38,7 @@ module.exports.addnew = async (req,res)=>{
 module.exports.showcampground = async (req,res)=> {
     var foundcampground = await (await Campground.findById(req.params.id)).execPopulate("comments");
     if(foundcampground){
-        res.render("campgrounds/showcamground",{campground:foundcampground});  
+        res.render("campgrounds/campground",{campground:foundcampground});  
     }else{
         req.flash("error", "Couldn't find the campground!");
         res.redirect("back");
